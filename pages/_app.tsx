@@ -1,10 +1,26 @@
 import '../styles/globals.scss';
 
-import { Component, FC } from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Layout from 'components/Layout';
+import { AppProps } from 'next/app';
+import { FC } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const MyApp: FC<{ Component: typeof Component; pageProps: any }> = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
+const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ThemeProvider>
+  );
 };
 
 export default MyApp;

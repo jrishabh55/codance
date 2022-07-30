@@ -3,12 +3,13 @@ import { FC } from 'react';
 
 const Home: FC = () => {
   return (
-    <div className="min-h-screen">
+    <>
       <Head>
-        <title>Codeation.io next-js template</title>
+        <title>Codance</title>
         <link href="/favicon.ico" rel="icon" />
       </Head>
-    </div>
+      Home
+    </>
   );
 };
 
