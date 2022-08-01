@@ -10,7 +10,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
 import { drawerWidth } from 'config/constants';
-import { Fragment } from 'react';
+import Link from 'next/link';
+import { FC, Fragment, MouseEventHandler } from 'react';
 
 import { menuItems } from './menuItems';
 
@@ -22,7 +23,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-const Drawer = ({ handleDrawerClose, open }) => {
+export type DrawerProps = {
+  open: boolean;
+  handleDrawerClose: MouseEventHandler<HTMLButtonElement>;
+};
+
+const Drawer: FC<DrawerProps> = ({ handleDrawerClose, open }) => {
   const theme = useTheme();
   return (
     <BaseDrawer
@@ -45,14 +51,14 @@ const Drawer = ({ handleDrawerClose, open }) => {
         {menuItems.map(({ Icon, name, path }) => (
           <Fragment key={name}>
             <ListItem key={name} disablePadding>
-              {Icon && (
-                <ListItemButton href={path}>
+              <ListItemButton LinkComponent={Link} href={path}>
+                {Icon && (
                   <ListItemIcon>
                     <Icon />
                   </ListItemIcon>
-                  <ListItemText primary={name} />
-                </ListItemButton>
-              )}
+                )}
+                <ListItemText primary={name} />
+              </ListItemButton>
             </ListItem>
             <Divider />
           </Fragment>

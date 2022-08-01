@@ -6,6 +6,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { drawerWidth } from 'config/constants';
+import { FCC } from 'globalTypes';
 import { useState } from 'react';
 
 import Drawer from './Drawer';
@@ -60,7 +61,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-const Layout = ({ children }) => {
+const Layout: FCC = ({ children }) => {
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {

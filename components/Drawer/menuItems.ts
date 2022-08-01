@@ -8,7 +8,7 @@ export const menuItems = [
   },
   {
     Icon: Person,
-    name: 'User',
-    path: '/user',
+    name: 'Customers',
+    path: '/customers/add',
   },
 ];
