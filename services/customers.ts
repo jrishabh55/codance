@@ -9,3 +9,7 @@ export const add = async (customer: Omit<Prisma.CustomerCreateInput, 'password'>
     method: 'POST',
   }).then((res) => res.json());
 };
+
+export const list = async (): Promise<Customer[]> => {
+  return fetch('/api/customers/list').then((res) => res.json());
+};

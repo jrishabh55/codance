@@ -2,24 +2,16 @@ import '../styles/globals.scss';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Layout from 'components/Layout';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import { FC, ReactElement, ReactNode } from 'react';
 
-const darkTheme = createTheme({
+const lightTheme = createTheme({
   palette: {
-    mode: 'dark',
-    primary: {
-      main: '#03a9f4',
-    },
-    secondary: {
-      dark: '#26a4e4',
-      main: '#f50057',
-    },
-    text: {
-      primary: '#CCCCCC',
-    },
+    mode: 'light',
   },
 });
 
@@ -32,12 +24,14 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const MyApp: FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
-  const getLayout = Component.getLayout || ((page) => page);
-
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={lightTheme}>
       <CssBaseline />
-      {getLayout(<Component {...pageProps} />)}
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 };

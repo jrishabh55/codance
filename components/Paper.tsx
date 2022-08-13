@@ -1,8 +1,10 @@
-import { Paper } from '@mui/material';
+import { Paper as BasePaper } from '@mui/material';
 import { styled } from '@mui/system';
 
-export default styled(Paper)(({ theme }) => ({
+const Paper = styled(BasePaper)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: theme.spacing(2),
 }));
+
+export default Paper;

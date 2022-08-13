@@ -1,28 +1,29 @@
 import { TextField, TextFieldProps } from '@mui/material';
 import { useFormik } from 'formik';
-import { FC } from 'react';
+import get from 'lodash.get';
+import { FC, memo } from 'react';
 
-type Field = typeof TextField;
-
-export type FormFieldProps = {
-  Field?: Field;
-  formik: ReturnType<typeof useFormik<any>>;
+export type FormFieldProps<FieldProp = any, FormikValues = any> = {
+  Field?: FC<FieldProp>;
+  formik: ReturnType<typeof useFormik<FormikValues>>;
   id: string;
 } & Omit<TextFieldProps, 'Filed' | 'id'>;
 
-const FormField: FC<FormFieldProps> = ({ Field, formik, id, ...rest }) => {
+const FormField: FC<FormFieldProps> = ({ Field, formik, id, name, ...rest }) => {
   if (!Field) {
     throw new Error('Field is required');
   }
 
+  const key = name ?? id;
+  const value = get(formik.values, key);
   return (
     <Field
-      error={formik.touched[id] && Boolean(formik.errors[id])}
-      helperText={formik.touched[id] && (formik.errors[id] as any)}
-      id={id}
-      label={id.replaceAll(/[-_]/g, ' ')}
-      name={id}
-      value={formik.values[id]}
+      error={formik.touched[key] && Boolean(formik.errors[key])}
+      helperText={formik.touched[key] && formik.errors[key]}
+      id={key}
+      label={key.replaceAll(/[-_]/g, ' ')}
+      name={key}
+      value={value}
       onChange={formik.handleChange}
       {...rest}
     />
@@ -34,4 +35,4 @@ FormField.defaultProps = {
   fullWidth: true,
 };
 
-export default FormField;
+export default memo(FormField);

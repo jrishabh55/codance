@@ -2,10 +2,8 @@
 
 import { Button, Divider } from '@mui/material';
 import FormField from 'components/FormField';
-import Layout from 'components/Layout';
 import Section from 'components/Section';
 import { useFormik } from 'formik';
-import { ReactNode } from 'react';
 import { add } from 'services/customers';
 
 const CustomersAdd = () => {
@@ -83,7 +81,5 @@ const CustomersAdd = () => {
     </Section>
   );
 };
-
-CustomersAdd.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
 
 export default CustomersAdd;

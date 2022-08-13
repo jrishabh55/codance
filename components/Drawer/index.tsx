@@ -51,14 +51,16 @@ const Drawer: FC<DrawerProps> = ({ handleDrawerClose, open }) => {
         {menuItems.map(({ Icon, name, path }) => (
           <Fragment key={name}>
             <ListItem key={name} disablePadding>
-              <ListItemButton LinkComponent={Link} href={path}>
-                {Icon && (
-                  <ListItemIcon>
-                    <Icon />
-                  </ListItemIcon>
-                )}
-                <ListItemText primary={name} />
-              </ListItemButton>
+              <Link href={path}>
+                <ListItemButton>
+                  {Icon && (
+                    <ListItemIcon>
+                      <Icon />
+                    </ListItemIcon>
+                  )}
+                  <ListItemText primary={name} />
+                </ListItemButton>
+              </Link>
             </ListItem>
             <Divider />
           </Fragment>

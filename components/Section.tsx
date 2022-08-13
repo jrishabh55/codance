@@ -1,17 +1,30 @@
-import { Box, BoxProps, Divider, Typography } from '@mui/material';
+import { Box, BoxProps, Divider, PaperProps, Typography } from '@mui/material';
 import { FCC } from 'globalTypes';
+import { forwardRef } from 'react';
 
 import Paper from './Paper';
 
-export type SectionProps = BoxProps & {
+type SectionBaseProps = BoxProps & {
   title?: string;
   card?: boolean;
 };
 
-const Section: FCC<SectionProps> = ({ card, children, title, ...boxProps }) => {
+type SectionPaperProps = SectionBaseProps & {
+  card?: true;
+  wrapperProps?: PaperProps;
+};
+
+type SectionBoxProps = SectionBaseProps & {
+  card?: false;
+  wrapperProps?: BoxProps;
+};
+
+export type SectionProps = SectionPaperProps | SectionBoxProps;
+
+const Section: FCC<SectionProps> = forwardRef(({ card, children, title, wrapperProps, ...boxProps }, ref) => {
   const Wrapper = card ? Paper : Box;
   return (
-    <Wrapper>
+    <Wrapper {...(wrapperProps as any)} ref={ref}>
       {title && (
         <>
           <Typography variant="h3">{title}</Typography>
@@ -23,6 +36,8 @@ const Section: FCC<SectionProps> = ({ card, children, title, ...boxProps }) => {
       </Box>
     </Wrapper>
   );
-};
+});
+
+Section.displayName = 'Section';
 
 export default Section;
