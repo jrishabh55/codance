@@ -39,21 +39,25 @@ const InvoiceHeadSection: FC<InvoiceHeadSectionProps> = ({ formik }) => {
               <br />
               {currentCustomer.billingAddress1}, {currentCustomer.billingAddress2}
               <br />
-              {currentCustomer.city}, {currentCustomer.postal}
+              {currentCustomer.city}, {currentCustomer.state}, {currentCustomer.postal}
               <br />
               {currentCustomer.country}
               <br />
+              <br />
+              {currentCustomer.accountNumber}
               {currentCustomer.email}
-              <Button onClick={() => formik.setFieldValue('customer', '')}>Edit Customer</Button>
+              <Button size="small" variant="text" onClick={() => formik.setFieldValue('customer', '')}>
+                Edit Customer
+              </Button>
             </Box>
           )}
         </Box>
       </Section>
       <Section display="grid" gap={2}>
-        <FormField formik={formik} id="invoice-number" size="small" />
-        <FormField formik={formik} id="P.O./S.O.-number" size="small" />
-        <FormField Field={DatePicker} formik={formik} id="invoice-date" size="small" />
-        <FormField Field={DatePicker} formik={formik} id="due-date" size="small" />
+        <FormField formik={formik} id="invoiceNumber" label="Invoice Number" size="small" />
+        <FormField formik={formik} id="poSoNumber" label="P.O./S.O. Number" size="small" />
+        <FormField Field={DatePicker} formik={formik} id="invoiceDate" label="Invoice Date" size="small" />
+        <FormField Field={DatePicker} formik={formik} id="dueDate" label="Due Date" size="small" />
       </Section>
     </Section>
   );

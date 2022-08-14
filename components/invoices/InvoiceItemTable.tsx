@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { PlusOne } from '@mui/icons-material';
+import { AddCircle } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
 import { FormFieldProps } from 'components/FormField';
 import Section from 'components/Section';
@@ -42,8 +42,8 @@ const InvoiceItemTable: FC<InvoiceItemTableProps> = ({ formik, gridTemplateColum
               <Box>
                 <Button
                   color="primary"
-                  endIcon={<PlusOne />}
-                  variant="outlined"
+                  startIcon={<AddCircle />}
+                  variant="text"
                   onClick={() => push({ description: '', id: Date.now(), quantity: 1, rate: 0, taxes: [] })}>
                   Add an item
                 </Button>

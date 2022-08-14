@@ -71,7 +71,7 @@ export const CalculationSection: FC<CalculationSectionProps> = ({ discount = '$0
         {!showDiscount && (
           <Box columnGap={2} component="section" display="grid" gridTemplateColumns={gridTemplateColumns} justifyContent="flex-end">
             <Button className="col-span-2 col-start-2 ml-auto" startIcon={<AddCircle />} onClick={toggleDiscount}>
-              Add Discount
+              Discount
             </Button>
           </Box>
         )}

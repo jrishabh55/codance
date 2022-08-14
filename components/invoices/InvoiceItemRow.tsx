@@ -1,12 +1,12 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Add, Delete } from '@mui/icons-material';
+import { AddCircle, Delete } from '@mui/icons-material';
 import { Box, Button, IconButton } from '@mui/material';
 import FormField, { FormFieldProps } from 'components/FormField';
 import Select from 'components/Select';
 import { FieldArray } from 'formik';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { formatCurrency } from 'utils';
-import { taxes } from 'utils/invoices';
+import { calculateTax, taxes } from 'utils/invoices';
 
 export type InvoiceItemRowProps = {
   formik: FormFieldProps['formik'];
@@ -17,6 +17,11 @@ export type InvoiceItemRowProps = {
 
 const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, index, remove }) => {
   const amount = parseInt(formik.values.services[index].quantity, 10) * parseInt(formik.values.services[index].rate, 10) || 0;
+  const taxValues = formik.values.services[index].taxes;
+
+  const taxOptions = useMemo(() => {
+    return taxes.map((tax) => ({ ...tax, disabled: !!taxValues.find((t: { amount: string }) => t.amount === tax.value) }));
+  }, [taxValues]);
 
   const [parent] = useAutoAnimate();
 
@@ -62,16 +67,16 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
       <FieldArray name={`services.${index}.taxes`}>
         {({ push, remove }) => (
           <>
-            {formik.values.services[index].taxes.map((tax: any, i: number) => (
+            {taxValues.map((tax: any, i: number) => (
               <Box key={tax.value} className="col-start-3" display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
                 <Box alignItems="center" className="ml-auto" display="flex">
                   {i === 0 ? 'Tax' : ''}
                 </Box>
                 <Box className="col-span-2">
-                  <Select fullWidth formik={formik} id={`services.${index}.taxes.${i}.amount`} label="" options={taxes} size="small" />
+                  <Select fullWidth formik={formik} id={`services.${index}.taxes.${i}.amount`} label="" options={taxOptions} size="small" />
                 </Box>
                 <Box alignItems="center" display="grid" textAlign="right">
-                  {tax.amount}
+                  {formatCurrency(calculateTax(formik.values.services[index], tax.amount))}
                 </Box>
                 <Box alignItems="center" display="grid">
                   <IconButton onClick={() => remove(i)}>
@@ -84,8 +89,8 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
               <Button
                 className="col-span-1 col-start-2"
                 color="primary"
-                endIcon={<Add />}
-                variant="outlined"
+                startIcon={<AddCircle />}
+                variant="text"
                 onClick={() => push({ amount: '' })}>
                 Tax
               </Button>

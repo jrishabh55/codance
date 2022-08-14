@@ -7,7 +7,7 @@ import type { FormFieldProps } from './FormField';
 
 export type SelectProps = Omit<FormFieldProps, 'Field'> &
   SelectBaseProps & {
-    options: Array<{ label: string; value: string }>;
+    options: Array<{ label: string; value: string; disabled?: boolean }>;
   };
 
 const Select: FC<SelectProps> = ({ formik, fullWidth, id, label, name, options, ...rest }) => {
@@ -20,7 +20,7 @@ const Select: FC<SelectProps> = ({ formik, fullWidth, id, label, name, options, 
       {_label && <InputLabel id={`label-${key}`}>{_label}</InputLabel>}
       <SelectBase id={key} labelId={`label-${key}`} name={key} value={value} onChange={formik.handleChange} {...rest}>
         {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option.value} disabled={option.disabled === true} value={option.value}>
             {option.label}
           </MenuItem>
         ))}

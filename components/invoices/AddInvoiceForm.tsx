@@ -1,5 +1,5 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Divider } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import Section from 'components/Section';
 import { FormikProvider, useFormik } from 'formik';
 import { useMemo } from 'react';
@@ -18,6 +18,8 @@ const AddInvoiceForm = () => {
       discountName: 'Discount',
       discountType: '$',
       discountValue: 0,
+      invoiceNumber: '',
+      poSoNumber: '',
       services: [
         {
           description: '',
@@ -44,6 +46,9 @@ const AddInvoiceForm = () => {
         <CalculationSection discount={discount} formik={formik} gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" subTotal={subTotal} />
         <Divider />
         <InvoiceTotalSection gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" total={total} />
+        <Button className="ml-auto rounded-full" variant="contained">
+          Save and continue
+        </Button>
       </Section>
     </FormikProvider>
   );
