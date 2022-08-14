@@ -1,3 +1,4 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Add, Delete } from '@mui/icons-material';
 import { Box, Button, IconButton } from '@mui/material';
 import FormField, { FormFieldProps } from 'components/FormField';
@@ -17,8 +18,10 @@ export type InvoiceItemRowProps = {
 const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, index, remove }) => {
   const amount = parseInt(formik.values.services[index].quantity, 10) * parseInt(formik.values.services[index].rate, 10) || 0;
 
+  const [parent] = useAutoAnimate();
+
   return (
-    <Box component="article" display="flex" flexDirection="column" gap={2}>
+    <Box ref={parent} component="article" display="flex" flexDirection="column" gap={2}>
       <Box display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
         <Box>
           <FormField formik={formik} id="description" label="" name={`services.${index}.description`} size="small" />

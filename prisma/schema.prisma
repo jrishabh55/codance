@@ -128,7 +128,7 @@ datasource db {
 // }
 
 model Customer {
-  id              String   @id @default(cuid())
+  id              String    @id @default(cuid())
   customerName    String
   firstName       String
   lastName        String
@@ -142,6 +142,40 @@ model Customer {
   country         String
   phone           String
   website         String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
+  Invoice         Invoice[]
+}
+
+model Service {
+  id                 String              @id @default(cuid())
+  serviceName        String
+  serviceDescription String
+  price              Float
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @default(now())
+  invoices           InvoiceOnServices[]
+}
+
+enum Discount {
+  discountName
+  discountType
+  discountValue
+}
+
+model Invoice {
+  id         String   @id @default(cuid())
+  customerId String
+  discount   Discount
+
+  services InvoiceOnServices[]
+  customer Customer            @relation(fields: [customerId], references: [id])
+}
+
+model InvoiceOnServices {
+  id        String  @id @default(cuid())
+  invoiceId String
+  serviceId String
+  Invoice   Invoice @relation(fields: [invoiceId], references: [id])
+  Service   Service @relation(fields: [serviceId], references: [id])
 }
