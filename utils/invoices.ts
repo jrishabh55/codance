@@ -56,6 +56,12 @@ export const calculateTaxes = (values: InvoiceFormValues) => {
   return parsedTaxes;
 };
 
+export const calculateTax = (service: InvoiceFormValues['services'][0], taxValue: string) => {
+  const taxPercentage = (parseInt(taxValue, 10) || 0) / 100;
+  const amount = service.quantity * service.rate;
+  return amount * taxPercentage;
+};
+
 export const calculateInvoices = (values: InvoiceFormValues) => {
   const { services } = values;
 
