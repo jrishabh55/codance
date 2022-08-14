@@ -18,7 +18,7 @@ const AddInvoiceForm = () => {
       discountName: 'Discount',
       discountType: '$',
       discountValue: 0,
-      items: [
+      services: [
         {
           description: '',
           quantity: 1,

@@ -21,7 +21,7 @@ export type InvoiceFormValues = {
   discountName: string;
   discountType: string;
   discountValue: number;
-  items: {
+  services: {
     description: string;
     quantity: number;
     rate: number;
@@ -32,10 +32,10 @@ export type InvoiceFormValues = {
 };
 
 export const calculateTaxes = (values: InvoiceFormValues) => {
-  const { items } = values;
+  const { services } = values;
   const taxesObj: Record<`${number}%`, number> = {};
 
-  items.forEach((item) => {
+  services.forEach((item) => {
     item.taxes.forEach((tax) => {
       if (!taxesObj[tax.amount]) {
         taxesObj[tax.amount] = 0;
@@ -57,11 +57,11 @@ export const calculateTaxes = (values: InvoiceFormValues) => {
 };
 
 export const calculateInvoices = (values: InvoiceFormValues) => {
-  const { items } = values;
+  const { services } = values;
 
-  const subTotal = items.reduce((itemsSum, item) => {
+  const subTotal = services.reduce((itemsSum, item) => {
     const totalTaxPercentage = item.taxes.reduce((taxSum, tax) => taxSum + parseInt(tax.amount, 10) || 0, 0);
-    console.log('🚀 ~ file: invoices.ts ~ line 62 ~ subTotal ~ totalTaxPercentage', totalTaxPercentage);
+
     const amount = item.quantity * item.rate;
     const taxAmount = (amount * totalTaxPercentage) / 100;
     return itemsSum + amount + taxAmount;

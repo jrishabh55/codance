@@ -27,16 +27,16 @@ const InvoiceItemTable: FC<InvoiceItemTableProps> = ({ formik, gridTemplateColum
         </Box>
       </Box>
       <Box ref={parent} display="flex" flexDirection="column" gap={2}>
-        <FieldArray name="items">
+        <FieldArray name="services">
           {({ push, remove }) => (
             <>
-              {values.items.map((row: any, i: number) => (
+              {values.services.map((row: any, i: number) => (
                 <InvoiceItemRow
                   key={row.id ?? i}
                   formik={formik}
                   gridTemplateColumns={gridTemplateColumns}
                   index={i}
-                  remove={values.items?.length > 1 ? () => remove(i) : undefined}
+                  remove={values.services?.length > 1 ? () => remove(i) : undefined}
                 />
               ))}
               <Box>

@@ -15,13 +15,13 @@ export type InvoiceItemRowProps = {
 };
 
 const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, index, remove }) => {
-  const amount = parseInt(formik.values.items[index].quantity, 10) * parseInt(formik.values.items[index].rate, 10) || 0;
+  const amount = parseInt(formik.values.services[index].quantity, 10) * parseInt(formik.values.services[index].rate, 10) || 0;
 
   return (
     <Box component="article" display="flex" flexDirection="column" gap={2}>
       <Box display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
         <Box>
-          <FormField formik={formik} id="description" label="" name={`items.${index}.description`} size="small" />
+          <FormField formik={formik} id="description" label="" name={`services.${index}.description`} size="small" />
         </Box>
         <Box>
           <FormField
@@ -29,13 +29,21 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
             id="quantity"
             inputProps={{ min: 1 }}
             label=""
-            name={`items.${index}.quantity`}
+            name={`services.${index}.quantity`}
             size="small"
             type="number"
           />
         </Box>
         <Box>
-          <FormField formik={formik} id="rate" inputProps={{ min: 1 }} label="" name={`items.${index}.rate`} size="small" type="number" />
+          <FormField
+            formik={formik}
+            id="rate"
+            inputProps={{ min: 1 }}
+            label=""
+            name={`services.${index}.rate`}
+            size="small"
+            type="number"
+          />
         </Box>
         <Box alignItems="center" display="grid" textAlign="right">
           {formatCurrency(amount)}
@@ -48,16 +56,16 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
           )}
         </Box>
       </Box>
-      <FieldArray name={`items.${index}.taxes`}>
+      <FieldArray name={`services.${index}.taxes`}>
         {({ push, remove }) => (
           <>
-            {formik.values.items[index].taxes.map((tax: any, i: number) => (
+            {formik.values.services[index].taxes.map((tax: any, i: number) => (
               <Box key={tax.value} className="col-start-3" display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
                 <Box alignItems="center" className="ml-auto" display="flex">
                   {i === 0 ? 'Tax' : ''}
                 </Box>
                 <Box className="col-span-2">
-                  <Select fullWidth formik={formik} id={`items.${index}.taxes.${i}.amount`} label="" options={taxes} size="small" />
+                  <Select fullWidth formik={formik} id={`services.${index}.taxes.${i}.amount`} label="" options={taxes} size="small" />
                 </Box>
                 <Box alignItems="center" display="grid" textAlign="right">
                   {tax.amount}
