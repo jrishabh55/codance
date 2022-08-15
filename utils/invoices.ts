@@ -1,3 +1,5 @@
+import type { Dayjs } from 'dayjs';
+
 export const taxes = [
   {
     label: 'GST 5%',
@@ -18,9 +20,14 @@ export const taxes = [
 ];
 
 export type InvoiceFormValues = {
+  customer: string;
   discountName: string;
   discountType: string;
   discountValue: number;
+  dueDate: Dayjs;
+  invoiceDate: Dayjs;
+  invoiceNumber: string;
+  poSoNumber: string;
   services: {
     description: string;
     quantity: number;

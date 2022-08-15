@@ -7,7 +7,7 @@ import Select from 'components/Select';
 import { FC, useMemo } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { formatCurrency } from 'utils';
-import { calculateTaxes } from 'utils/invoices';
+import { calculateTaxes, InvoiceFormValues } from 'utils/invoices';
 
 const discountType = [
   { label: '%', value: '%' },
@@ -15,7 +15,7 @@ const discountType = [
 ];
 
 export type CalculationSectionProps = {
-  formik: FormFieldProps['formik'];
+  formik: FormFieldProps<InvoiceFormValues>['formik'];
   gridTemplateColumns: string;
   discount?: number | string;
   subTotal?: number | string;
@@ -31,11 +31,11 @@ export const CalculationSection: FC<CalculationSectionProps> = ({ discount = '$0
 
   useEffect(() => {
     if (showDiscount) {
-      setValues((values: any) => ({ ...values, discountName: 'Discount', discountType: '$', discountValue: 0 }));
+      setValues((values) => ({ ...values, discountName: 'Discount', discountType: '$', discountValue: 0 }));
       return;
     }
 
-    setValues((values: any) => ({ ...values, discountValue: 0 }));
+    setValues((values) => ({ ...values, discountValue: 0 }));
   }, [showDiscount, setValues]);
 
   return (

@@ -1,9 +1,10 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, Divider } from '@mui/material';
 import Section from 'components/Section';
+import dayjs from 'dayjs';
 import { FormikProvider, useFormik } from 'formik';
 import { useMemo } from 'react';
-import { calculateInvoices } from 'utils/invoices';
+import { calculateInvoices, InvoiceFormValues } from 'utils/invoices';
 
 import { CalculationSection } from './CalculationSection';
 import InvoiceHeadSection from './InvoiceHeadSection';
@@ -12,25 +13,27 @@ import InvoiceTotalSection from './InvoiceTotalSection';
 
 const AddInvoiceForm = () => {
   const [parent] = useAutoAnimate();
-  const formik = useFormik({
+  const formik = useFormik<InvoiceFormValues>({
     initialValues: {
       customer: '',
       discountName: 'Discount',
       discountType: '$',
       discountValue: 0,
+      dueDate: dayjs().add(1, 'month'),
+      invoiceDate: dayjs(),
       invoiceNumber: '',
       poSoNumber: '',
       services: [
         {
           description: '',
           quantity: 1,
-          rate: 0.0,
+          rate: 0,
           taxes: [],
         },
       ],
     },
-    onSubmit: () => {
-      // console.log something here
+    onSubmit: (values) => {
+      console.log('🚀 ~ file: addInvoiceForm.tsx ~ line 33 ~ AddInvoiceForm ~ values', values);
     },
   });
 
@@ -46,7 +49,7 @@ const AddInvoiceForm = () => {
         <CalculationSection discount={discount} formik={formik} gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" subTotal={subTotal} />
         <Divider />
         <InvoiceTotalSection gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" total={total} />
-        <Button className="ml-auto rounded-full" variant="contained">
+        <Button className="ml-auto rounded-full" type="submit" variant="contained" onClick={formik.submitForm}>
           Save and continue
         </Button>
       </Section>

@@ -5,11 +5,12 @@ import { FormFieldProps } from 'components/FormField';
 import Section from 'components/Section';
 import { FieldArray } from 'formik';
 import { FC } from 'react';
+import { InvoiceFormValues } from 'utils/invoices';
 
 import InvoiceItemRow from './InvoiceItemRow';
 
 export type InvoiceItemTableProps = {
-  formik: FormFieldProps['formik'];
+  formik: FormFieldProps<InvoiceFormValues>['formik'];
   gridTemplateColumns: string;
 };
 const InvoiceItemTable: FC<InvoiceItemTableProps> = ({ formik, gridTemplateColumns }) => {
@@ -30,9 +31,9 @@ const InvoiceItemTable: FC<InvoiceItemTableProps> = ({ formik, gridTemplateColum
         <FieldArray name="services">
           {({ push, remove }) => (
             <>
-              {values.services.map((row: any, i: number) => (
+              {values.services.map((row, i: number) => (
                 <InvoiceItemRow
-                  key={row.id ?? i}
+                  key={row.description ?? i}
                   formik={formik}
                   gridTemplateColumns={gridTemplateColumns}
                   index={i}

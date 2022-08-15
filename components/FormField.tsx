@@ -3,13 +3,13 @@ import { useFormik } from 'formik';
 import get from 'lodash.get';
 import { FC, memo } from 'react';
 
-export type FormFieldProps<FieldProp = any, FormikValues = any> = {
+export type FormFieldProps<FormikValues, FieldProp = Record<string, any>> = {
   Field?: FC<FieldProp>;
   formik: ReturnType<typeof useFormik<FormikValues>>;
   id: string;
 } & Omit<TextFieldProps, 'Filed' | 'id'>;
 
-const FormField: FC<FormFieldProps> = ({ Field, formik, id, name, ...rest }) => {
+const FormField: FC<FormFieldProps<any>> = ({ Field, formik, id, name, ...rest }) => {
   if (!Field) {
     throw new Error('Field is required');
   }

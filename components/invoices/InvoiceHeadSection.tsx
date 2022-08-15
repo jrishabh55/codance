@@ -7,9 +7,10 @@ import Section from 'components/Section';
 import Select from 'components/Select';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { list } from 'services/customers';
+import { InvoiceFormValues } from 'utils/invoices';
 
 export type InvoiceHeadSectionProps = {
-  formik: FormFieldProps['formik'];
+  formik: FormFieldProps<InvoiceFormValues>['formik'];
 };
 
 const InvoiceHeadSection: FC<InvoiceHeadSectionProps> = ({ formik }) => {

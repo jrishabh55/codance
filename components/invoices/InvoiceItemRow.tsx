@@ -6,17 +6,17 @@ import Select from 'components/Select';
 import { FieldArray } from 'formik';
 import { FC, useMemo } from 'react';
 import { formatCurrency } from 'utils';
-import { calculateTax, taxes } from 'utils/invoices';
+import { calculateTax, InvoiceFormValues, taxes } from 'utils/invoices';
 
 export type InvoiceItemRowProps = {
-  formik: FormFieldProps['formik'];
+  formik: FormFieldProps<InvoiceFormValues>['formik'];
   gridTemplateColumns: string;
   index: number;
   remove?: () => void;
 };
 
 const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, index, remove }) => {
-  const amount = parseInt(formik.values.services[index].quantity, 10) * parseInt(formik.values.services[index].rate, 10) || 0;
+  const amount = formik.values.services[index].quantity * formik.values.services[index].rate;
   const taxValues = formik.values.services[index].taxes;
 
   const taxOptions = useMemo(() => {
@@ -67,8 +67,8 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
       <FieldArray name={`services.${index}.taxes`}>
         {({ push, remove }) => (
           <>
-            {taxValues.map((tax: any, i: number) => (
-              <Box key={tax.value} className="col-start-3" display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
+            {taxValues.map((tax, i: number) => (
+              <Box key={tax.amount} className="col-start-3" display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
                 <Box alignItems="center" className="ml-auto" display="flex">
                   {i === 0 ? 'Tax' : ''}
                 </Box>
