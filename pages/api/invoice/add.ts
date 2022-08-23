@@ -11,10 +11,12 @@ const customerAdd: NextApiHandler = async (req, res) => {
     return;
   }
 
-  // SQL FOR Create user
-  // INSERT INTO users (name, email) VALUES ('John Doe', '\
-  const customer = await prisma.customer.create({ data: JSON.parse(req.body) });
-  return res.json(customer);
+  try {
+    const invoice = await prisma.invoice.create({ data: JSON.parse(req.body) });
+    return res.json(invoice);
+  } catch (e: any) {
+    res.status(500).json({ message: e?.message });
+  }
 };
 
 export default customerAdd;

@@ -33,7 +33,7 @@ const InvoiceItemTable: FC<InvoiceItemTableProps> = ({ formik, gridTemplateColum
             <>
               {values.services.map((row, i: number) => (
                 <InvoiceItemRow
-                  key={row.description ?? i}
+                  key={row.id}
                   formik={formik}
                   gridTemplateColumns={gridTemplateColumns}
                   index={i}

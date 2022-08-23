@@ -1,6 +1,6 @@
 import { Customer, Prisma } from '@prisma/client';
 
-export const add = async (customer: Omit<Prisma.CustomerCreateInput, 'password'>): Promise<Customer> => {
+export const add = async (customer: Prisma.CustomerCreateInput): Promise<Customer> => {
   return fetch('/api/customers/add', {
     body: JSON.stringify(customer),
     headers: {

@@ -68,7 +68,7 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
         {({ push, remove }) => (
           <>
             {taxValues.map((tax, i: number) => (
-              <Box key={tax.amount} className="col-start-3" display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
+              <Box key={tax.id} className="col-start-3" display="grid" gap={2} gridTemplateColumns={gridTemplateColumns}>
                 <Box alignItems="center" className="ml-auto" display="flex">
                   {i === 0 ? 'Tax' : ''}
                 </Box>
@@ -91,7 +91,7 @@ const InvoiceItemRow: FC<InvoiceItemRowProps> = ({ formik, gridTemplateColumns, 
                 color="primary"
                 startIcon={<AddCircle />}
                 variant="text"
-                onClick={() => push({ amount: '' })}>
+                onClick={() => push({ amount: '', id: Date.now() })}>
                 Tax
               </Button>
             </Box>

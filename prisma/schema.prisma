@@ -164,9 +164,16 @@ enum Discount {
 }
 
 model Invoice {
-  id         String   @id @default(cuid())
-  customerId String
-  discount   Discount
+  id            String   @id @default(cuid())
+  customerId    String
+  invoiceNumber String
+  poSoNumber    String
+  invoiceDate   DateTime
+  dueDate       DateTime
+  discount      Json?
+  taxes         Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
 
   services InvoiceOnServices[]
   customer Customer            @relation(fields: [customerId], references: [id])

@@ -30,9 +30,11 @@ export type InvoiceFormValues = {
   poSoNumber: string;
   services: {
     description: string;
+    id: number;
     quantity: number;
     rate: number;
     taxes: {
+      id: number;
       amount: `${number}%`;
     }[];
   }[];
