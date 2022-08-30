@@ -170,6 +170,7 @@ model Invoice {
   poSoNumber    String
   invoiceDate   DateTime
   dueDate       DateTime
+  items         Json
   discount      Json?
   taxes         Json?
   createdAt     DateTime @default(now())

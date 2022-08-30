@@ -11,6 +11,8 @@ import InvoiceHeadSection from './InvoiceHeadSection';
 import InvoiceItemTable from './InvoiceItemTable';
 import InvoiceTotalSection from './InvoiceTotalSection';
 
+const gridColumns = '7fr 1fr 1fr 1fr 0.5fr';
+
 const AddInvoiceForm = () => {
   const [parent] = useAutoAnimate();
   const formik = useFormik<InvoiceFormValues>({
@@ -26,6 +28,7 @@ const AddInvoiceForm = () => {
       services: [
         {
           description: '',
+          id: 1,
           quantity: 1,
           rate: 0,
           taxes: [],
@@ -44,11 +47,11 @@ const AddInvoiceForm = () => {
       <Section ref={parent} card display="grid" gridTemplateColumns="repeat(1, minmax(0, 1fr))" rowGap={4}>
         <InvoiceHeadSection formik={formik} />
         <Divider />
-        <InvoiceItemTable formik={formik} gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" />
+        <InvoiceItemTable formik={formik} gridTemplateColumns={gridColumns} />
         <Divider />
-        <CalculationSection discount={discount} formik={formik} gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" subTotal={subTotal} />
+        <CalculationSection discount={discount} formik={formik} gridTemplateColumns={gridColumns} subTotal={subTotal} />
         <Divider />
-        <InvoiceTotalSection gridTemplateColumns="7fr 1fr 1fr 1fr 0.5fr" total={total} />
+        <InvoiceTotalSection gridTemplateColumns={gridColumns} total={total} />
         <Button className="ml-auto rounded-full" type="submit" variant="contained" onClick={formik.submitForm}>
           Save and continue
         </Button>
